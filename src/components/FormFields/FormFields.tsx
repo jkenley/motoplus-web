@@ -1,20 +1,39 @@
-import { FormControl, FormErrorMessage, FormLabel, Input, Textarea } from '@chakra-ui/react';
+import { FormControl, FormErrorMessage, FormLabel, Input, Select, Textarea } from '@chakra-ui/react';
 import React from 'react';
 
 import { FormFieldsProps } from '@/types/index';
 
 const FormFields: React.FC<FormFieldsProps> = ({ values, errors, handleChange, qrCode }) => {
+  // Fetch from Strapi API
+  const stores = [
+    { label: 'Chino Herrera SRL', value: '3' },
+    { label: 'Mapa', value: '2' },
+    { label: 'Tienda Tropical', value: '1' },
+  ];
+
   return (
     <>
       <FormControl isInvalid={!!errors.store}>
         <FormLabel htmlFor="store">Nombre de la tienda</FormLabel>
-        <Input type="text" id="store" name="store" value={values.store} onChange={handleChange} />
+        <Select
+          id="store"
+          name="store"
+          value={values.store}
+          onChange={handleChange}
+          placeholder="Selecciona una tienda"
+        >
+          {stores.map((store, index) => (
+            <option key={index} value={store.value}>
+              {store.label}
+            </option>
+          ))}
+        </Select>
         {errors.store && <FormErrorMessage>{errors.store}</FormErrorMessage>}
       </FormControl>
 
       <FormControl>
         <FormLabel htmlFor="qrCode">Código QR</FormLabel>
-        <Input id="qrCode" value={qrCode} disabled />
+        <Input type="text" id="qrCode" name="qrCode" value={qrCode} disabled />
       </FormControl>
 
       <FormControl isInvalid={!!errors.fullName}>

@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Stack, Text } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, Box, Button, Flex, Stack, Text } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -8,12 +8,20 @@ import Layout from '@/components/Layout';
 import useForm from '@/hooks/useForm';
 import validateForm from '@/validations/formValidations';
 
+type ApiResponse = {
+  status: number;
+  message: string;
+  data?: any;
+};
+
 const QRCodePage: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
 
   const [qrCode, setQrCode] = useState('');
   const [isQrCodeValid, setIsQrCodeValid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmittedSuccessfully, setIsSubmittedSuccessfully] = useState(false);
   const { values, errors, handleChange, handleSubmit } = useForm(submitForm, validateForm);
 
   useEffect(() => {
@@ -24,12 +32,48 @@ const QRCodePage: React.FC = () => {
     }
   }, [id]);
 
+  // This function is called when the form is submitted
   async function submitForm() {
+    setIsSubmitting(true); // Start of submission
+
     try {
-      // API call with environment variable
-      console.log(values);
+      // Create an object with the data from the form
+      const buyerInfo = {
+        storeId: values.store,
+        fullName: values.fullName,
+        qrCodeNumber: qrCode,
+        phoneNumber: values.phoneNumber,
+        notes: values.note,
+      };
+
+      // Send data to the /api/scan-qrcode endpoint
+      const response = await fetch('/api/scan-qrcode', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(buyerInfo),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseData: ApiResponse = await response.json();
+      // console.log('Response from /api/scan-qrcode:', responseData);
+
+      // Check if the response status is 200 and update isSubmittedSuccessfully
+      if (responseData.status === 200) {
+        setIsSubmittedSuccessfully(true);
+      }
+
+      // Handle response data as needed
     } catch (error) {
-      // Error handling
+      console.error('Error submitting form:', error);
+      setIsSubmittedSuccessfully(false); // Reset in case of error
+    } finally {
+      // This code runs after try/catch, regardless of the outcome
+      setIsSubmitting(false); // Reset submitting state
     }
   }
 
@@ -42,13 +86,25 @@ const QRCodePage: React.FC = () => {
               ¡Gracias por escanear el código QR!
             </Text>
             <Text fontSize="1rem" color="#343947" textAlign="center">
-              El código QR que ha escaneado no es válido.
+              El código QR que has escaneado no es válido.
             </Text>
           </Flex>
         </Box>
       ) : (
-        <>
-          <Box as="section" mt={16} mb={10}>
+        <Box
+          mb={{
+            base: 16,
+            md: 32,
+          }}
+        >
+          <Box
+            as="section"
+            mt={{
+              base: 8,
+              md: 16,
+            }}
+            mb={10}
+          >
             <Flex justifyContent="center" alignItems="center" flexDirection="column">
               <Text textAlign="center" fontSize="1.5rem" fontWeight="bold" color="#343947" mb={4}>
                 ¡Gracias por escanear el código QR!
@@ -58,8 +114,16 @@ const QRCodePage: React.FC = () => {
               </Text>
             </Flex>
           </Box>
-
           <Box mt={4} maxWidth="800px" margin="0 auto" as="section" css={formStyle}>
+            {isSubmittedSuccessfully && (
+              <Alert status="info" borderRadius="sm" mb={4}>
+                <AlertIcon />
+                <AlertDescription fontFamily="body" fontSize=".9rem">
+                  El formulario ha sido enviado con éxito.
+                </AlertDescription>
+              </Alert>
+            )}
+
             <form onSubmit={handleSubmit}>
               <Stack
                 spacing={2}
@@ -78,16 +142,17 @@ const QRCodePage: React.FC = () => {
                   bg="#de392c"
                   height="45px"
                   transition="all .2s ease-in-out"
+                  disabled={isSubmitting || isSubmittedSuccessfully}
                   _hover={{
                     bg: '#000',
                   }}
                 >
-                  Enviar
+                  {isSubmitting ? 'Enviando...' : 'Enviar'}
                 </Button>
               </Stack>
             </form>
           </Box>
-        </>
+        </Box>
       )}
     </Layout>
   );

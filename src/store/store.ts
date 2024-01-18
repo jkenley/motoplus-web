@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import { BASE_API_URL } from '@/lib/constants';
-import { OrderData, QRCode, StoreState, TransformedItem } from '../types/index';
+import { OrderData, QRCode, StoreState, TransformedItem } from '@/types/index';
 
 const useStore = create<StoreState>((set) => ({
   dropdownValues: [],

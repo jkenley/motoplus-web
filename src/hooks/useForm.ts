@@ -3,15 +3,17 @@ import { FormEvent, useCallback, useState } from 'react';
 import { FormErrors, FormValues } from '../types';
 
 const useForm = (submitCallback: (values: FormValues) => void, validate: (values: FormValues) => FormErrors) => {
-  const [values, setValues] = useState<FormValues>({ store: '', fullName: '', phoneNumber: '', note: '' });
+  const [values, setValues] = useState<FormValues>({ store: '', qrCode: '', fullName: '', phoneNumber: '', note: '' });
   const [errors, setErrors] = useState<FormErrors>({});
 
-  // Handle field value changes
-  const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = event.target;
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      const { name, value } = event.target;
 
-    setValues((values) => ({ ...values, [name]: value }));
-  }, []);
+      setValues((values) => ({ ...values, [name]: value }));
+    },
+    [],
+  );
 
   // Handle form submission
   const handleSubmit = async (event: FormEvent) => {
@@ -22,7 +24,7 @@ const useForm = (submitCallback: (values: FormValues) => void, validate: (values
 
     if (Object.keys(newErrors).length === 0) {
       try {
-        await submitCallback(values);
+        submitCallback(values);
       } catch (error) {
         // Handle submission error
         console.error('Form submission error:', error);

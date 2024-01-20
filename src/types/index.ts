@@ -84,7 +84,6 @@ export interface StoreState {
   orders: { [key: string]: TransformedItem[] };
   qrCodes: QRCode[] | null;
   loading: boolean;
-  setLoading: (loading: boolean) => void;
   setSelectedOrder: (identifier: string) => void;
   setQRCodes: (qrCodes: QRCode[]) => void;
   fetchOrders: () => Promise<void>;

@@ -9,7 +9,6 @@ const useStore = create<StoreState>((set) => ({
   orders: {},
   qrCodes: [],
   loading: false,
-  setLoading: (loading: boolean) => set(() => ({ loading })),
   setSelectedOrder: (identifier: string) => {
     set((state) => ({
       ...state,

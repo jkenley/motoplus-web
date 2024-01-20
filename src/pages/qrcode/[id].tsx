@@ -27,6 +27,7 @@ const QRCodePage: React.FC = () => {
   useEffect(() => {
     if (id) {
       const isValidQRCode = id.toString().match(/^([^-]+)-([\w-]+)-([^-]+)-([\w]{10})$/) !== null;
+
       setIsQrCodeValid(isValidQRCode);
       setQrCode(id as string);
     }
@@ -60,7 +61,6 @@ const QRCodePage: React.FC = () => {
       }
 
       const responseData: ApiResponse = await response.json();
-      // console.log('Response from /api/scan-qrcode:', responseData);
 
       // Check if the response status is 200 and update isSubmittedSuccessfully
       if (responseData.status === 200) {
@@ -69,10 +69,8 @@ const QRCodePage: React.FC = () => {
 
       // Handle response data as needed
     } catch (error) {
-      console.error('Error submitting form:', error);
       setIsSubmittedSuccessfully(false); // Reset in case of error
     } finally {
-      // This code runs after try/catch, regardless of the outcome
       setIsSubmitting(false); // Reset submitting state
     }
   }
@@ -163,23 +161,49 @@ const formStyle = css`
     margin-bottom: 1rem;
   }
 
-  label {
+  [id^='field-:r'][id$=':-feedback'] {
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  label,
+  input,
+  select,
+  textarea {
     color: #343947;
     font-size: 14.5px;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  label {
     margin-bottom: 0.5rem;
     display: block;
   }
 
-  input {
-    height: 40px;
-    color: #343947;
+  input,
+  select,
+  textarea {
     border: 1px solid #e1e1e1;
     border-radius: 3px;
     font-weight: 450;
-    font-size: 14.5px;
     padding: 0 12px;
     transition: 0.3s ease;
+  }
 
+  input,
+  textarea {
+    height: 40px; /* Adjust for textarea separately */
+  }
+
+  textarea {
+    height: 150px;
+    resize: vertical;
+    padding: 12px 12px;
+  }
+
+  input,
+  select,
+  textarea {
     &:focus {
       border-color: #e1e1e1;
       background-color: hsla(237.1, 64.3%, 96.1%, 10%);
@@ -189,7 +213,6 @@ const formStyle = css`
     }
 
     &::placeholder {
-      color: #343947;
       opacity: 0.8;
     }
   }
@@ -205,49 +228,10 @@ const formStyle = css`
   }
 
   select {
-    color: hsl(228, 16%, 42%, 80%);
-    font-size: 14.5px;
-    font-weight: 450;
-    border: 1px solid #e1e1e1;
-    border-radius: 3px;
-    padding: 0 12px;
     height: 45px;
     outline: none;
     opacity: 1;
     cursor: pointer;
-
-    &:focus {
-      border-color: #e1e1e1;
-      background-color: hsla(237.1, 64.3%, 96.1%, 10%);
-      box-shadow:
-        0px 0px 0px 2px white,
-        0px 0px 0px 4px #7176e0;
-    }
-  }
-
-  textarea {
-    height: 150px;
-    color: #343947;
-    border: 1px solid #e1e1e1;
-    border-radius: 3px;
-    padding: 12px 12px;
-    font-weight: 500;
-    font-size: 14.5px;
-    resize: vertical;
-    transition: 0.3s ease;
-
-    &:focus {
-      border-color: #e1e1e1;
-      background-color: hsla(237.1, 64.3%, 96.1%, 10%);
-      box-shadow:
-        0px 0px 0px 2px white,
-        0px 0px 0px 4px #7176e0;
-    }
-
-    &::placeholder {
-      color: #343947;
-      opacity: 0.8;
-    }
   }
 `;
 

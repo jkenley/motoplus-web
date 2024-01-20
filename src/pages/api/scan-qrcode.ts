@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   // Only allow POST requests, return 405 for other methods
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
-    
+
     res.status(405).json({ status: 405, message: 'Method Not Allowed' });
     return;
   }

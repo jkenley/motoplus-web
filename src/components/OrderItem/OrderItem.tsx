@@ -11,10 +11,10 @@ const OrderItem: React.FC = () => {
   const handleGenerateQRCode = (qrCodeParams: QRCodeParams): any => {
     const { randomPartLength, seed, numberOfCodes, brand, code, size, type } = qrCodeParams;
 
-    const qrGenerator = new QRCodeGenerator(seed);
-    const qrCodes = qrGenerator.generateCodes(randomPartLength, numberOfCodes, brand, code, size, type);
+    const qrGenerator = new QRCodeGenerator(seed); // Create new QR code generator
+    const qrCodes = qrGenerator.generateCodes(randomPartLength, numberOfCodes, brand, code, size, type); // Generate QR codes
 
-    setQRCodes(qrCodes);
+    setQRCodes(qrCodes); // Set new QR codes
   };
 
   if (!selectedOrder) {
@@ -26,13 +26,12 @@ const OrderItem: React.FC = () => {
       {selectedOrder.map((item, index) => (
         <ListItem key={index}>
           <Flex
-            border="1px solid #eaeaea"
+            padding={2}
             bg="hsla(0,0%,94.9%, 40%)"
+            border="1px solid #eaeaea"
             borderRadius="4px"
             justify="space-between"
             align="center"
-            py={2}
-            px={2}
           >
             <Text fontFamily="body" fontSize=".9rem" fontWeight="500" color="#343947" pl={2}>
               <Box as="span" fontWeight="600">

@@ -25,16 +25,17 @@ const ListQRCode: React.FC = () => {
   const { qrCodes } = useStore();
 
   useEffect(() => {
-    // Consider whether this logic is necessary, or if it can be optimized
     if (labelRef.current) {
       const svgElements = Array.from(labelRef.current.querySelectorAll('svg'));
       const svgStrings = svgElements.map((svg) => svg.outerHTML);
 
-      console.log('SVG Elements:', svgElements);
-      console.log('SVG Strings:', svgStrings);
+      if (svgStrings.length > 0) {
+        console.log(`${svgStrings.length} códigos QR generados`);
+      }
     }
   }, [qrCodes]);
 
+  // Function to handle print action
   const handleActions = (action: 'print') => {
     if (action !== 'print' || !labelRef.current) {
       setError('No QR codes to print.');
@@ -45,6 +46,7 @@ const ListQRCode: React.FC = () => {
       const printWindow = window.open('', '_blank');
 
       if (!printWindow) throw new Error('Failed to open print window.');
+
       printWindow.document.write(labelRef.current.outerHTML);
       printWindow.document.close();
       printWindow.print();
@@ -69,8 +71,9 @@ const ListQRCode: React.FC = () => {
         }}
       >
         <Text fontSize="1rem" fontWeight="600" fontFamily="body" color="#343947">
-          {qrCodes?.length} Códigos QR
+          {qrCodes?.length} códigos QR generados
         </Text>
+
         <Button
           height="32px"
           fontFamily="body"

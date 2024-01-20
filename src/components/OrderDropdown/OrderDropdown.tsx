@@ -10,11 +10,11 @@ const OrderDropdown: React.FC = () => {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
-
     setSelectedOrder(selectedValue);
   };
 
   useEffect(() => {
+    // Fetch orders
     fetchOrders();
   }, []);
 

@@ -33,7 +33,7 @@ const QRCodePage: React.FC = () => {
     }
   }, [id]);
 
-  // This function is called when the form is submitted
+  // This function is called when the form is being submitted
   async function submitForm() {
     setIsSubmitting(true); // Start of submission
 

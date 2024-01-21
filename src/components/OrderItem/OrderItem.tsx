@@ -1,6 +1,7 @@
 import { Box, Button, Flex, List, ListItem, Text } from '@chakra-ui/react';
 import React from 'react';
 
+import { areAllKeysDefined } from '@/lib/utils';
 import QRCodeGenerator from '@/services/qr-code-generator';
 import useStore from '@/store/store';
 import { QRCodeParams } from '@/types/index';
@@ -11,7 +12,13 @@ const OrderItem: React.FC = () => {
   const handleGenerateQRCode = (qrCodeParams: QRCodeParams): any => {
     const { randomPartLength, seed, numberOfCodes, brand, code, size, type } = qrCodeParams;
 
-    const qrGenerator = new QRCodeGenerator(seed); // Create new QR code generator
+    // Check if all keys have values
+    if (!areAllKeysDefined(qrCodeParams)) {
+      alert('Verifique el ítem de pedido en el CMS debido a un error en la generación de códigos QR.');
+      return;
+    }
+
+    const qrGenerator = new QRCodeGenerator(seed);
     const qrCodes = qrGenerator.generateCodes(randomPartLength, numberOfCodes, brand, code, size, type); // Generate QR codes
 
     setQRCodes(qrCodes); // Set new QR codes

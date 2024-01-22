@@ -156,7 +156,9 @@ export default class QRCodeGenerator {
     const codes = [];
     for (let i = 0; i < numberOfCodes; i++) {
       const randomPart = this.generateRandomAlphanumeric(codeLength);
-      const qrCodeString = `${code}-${size}-${type}-${randomPart}`;
+      
+      // QR code format: brand_code_type_size_randomid
+      const qrCodeString = `${brand}_${code}_${type}_${size}_${randomPart}`;
 
       codes.push({ qrCode: qrCodeString });
     }

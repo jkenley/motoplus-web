@@ -26,7 +26,9 @@ const QRCodePage: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      const isValidQRCode = id.toString().match(/^([^-]+)-([\w-]+)-([^-]+)-([\w]{10})$/) !== null;
+      // const isValidQRCode = id.toString().match(/^([^-]+)-([\w-]+)-([^-]+)-([\w]{10})$/) !== null;
+      // const isValidQRCode = id.toString().match(/^([\w-]+)-([\w-]+)-([\w-]+)-([\w-]+)-(\w{10})$/) !== null;
+      const isValidQRCode = id.toString().match(/^([\w-]+)_([\w-]+)_([\w-]+)_([\w-]+)_(\w{10})$/) !== null;
 
       setIsQrCodeValid(isValidQRCode);
       setQrCode(id as string);
@@ -192,7 +194,7 @@ const formStyle = css`
 
   input,
   textarea {
-    height: 40px; /* Adjust for textarea separately */
+    height: 40px;
   }
 
   textarea {
@@ -214,6 +216,10 @@ const formStyle = css`
 
     &::placeholder {
       opacity: 0.8;
+    }
+
+    &:disabled {
+      opacity: 1 !important;
     }
   }
 

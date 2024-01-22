@@ -6,6 +6,8 @@ import QRCodeGenerator from '@/services/qr-code-generator';
 import useStore from '@/store/store';
 import { QRCodeParams } from '@/types/index';
 
+const ERROR_MESSAGE = 'Verifique el ítem de pedido en el CMS debido a un error en la generación de códigos QR.';
+
 const OrderItem: React.FC = () => {
   const { selectedOrder, setQRCodes } = useStore();
 
@@ -14,12 +16,22 @@ const OrderItem: React.FC = () => {
 
     // Check if all keys have values
     if (!areAllKeysDefined(qrCodeParams)) {
-      alert('Verifique el ítem de pedido en el CMS debido a un error en la generación de códigos QR.');
+      alert(ERROR_MESSAGE);
+      return;
+    }
+
+    const qrCodeFormat = `${brand}_${code}_${type}_${size}`;
+
+    // Check if the QR code format is valid
+    const idValid = qrCodeFormat.toString().match(/^([\w-]+)_([\w-]+)_([\w-]+)_([\w-]+)$/) !== null;
+
+    if (!idValid) {
+      alert(ERROR_MESSAGE);
       return;
     }
 
     const qrGenerator = new QRCodeGenerator(seed);
-    const qrCodes = qrGenerator.generateCodes(randomPartLength, numberOfCodes, brand, code, size, type); // Generate QR codes
+    const qrCodes = qrGenerator.generateCodes(randomPartLength, numberOfCodes, brand, code, type, size); // Generate QR codes
 
     setQRCodes(qrCodes); // Set new QR codes
   };

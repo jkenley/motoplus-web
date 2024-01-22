@@ -16,7 +16,7 @@ const validateForm = (values: FormValues): FormErrors => {
   // Phone number validation
   if (!values.phoneNumber) {
     errors.phoneNumber = 'El número de teléfono es obligatorio';
-  } else if (!/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(values.phoneNumber)) {
+  } else if (!/^(809|829|849)[ -]?\d{3}[ -]?\d{4}$/.test(values.phoneNumber.replace(/\s+/g, ''))) {
     errors.phoneNumber = 'Formato de número de teléfono inválido';
   }
 

@@ -20,7 +20,7 @@ const FormFields: React.FC<FormFieldsProps> = ({ values, errors, handleChange, q
           name="store"
           value={values.store}
           onChange={handleChange}
-          placeholder="Selecciona una tienda"
+          placeholder="Seleccione la tienda donde compró el neumático"
         >
           {stores.map((store, index) => (
             <option key={index} value={store.value}>
@@ -38,13 +38,27 @@ const FormFields: React.FC<FormFieldsProps> = ({ values, errors, handleChange, q
 
       <FormControl isInvalid={!!errors.fullName}>
         <FormLabel htmlFor="fullName">Nombre completo</FormLabel>
-        <Input type="text" id="fullName" name="fullName" value={values.fullName} onChange={handleChange} />
+        <Input
+          type="text"
+          id="fullName"
+          name="fullName"
+          value={values.fullName}
+          placeholder="Juan Pérez Jiménez"
+          onChange={handleChange}
+        />
         {errors.fullName && <FormErrorMessage>{errors.fullName}</FormErrorMessage>}
       </FormControl>
 
       <FormControl isInvalid={!!errors.phoneNumber}>
         <FormLabel htmlFor="phoneNumber">Número de teléfono</FormLabel>
-        <Input type="tel" id="phoneNumber" name="phoneNumber" value={values.phoneNumber} onChange={handleChange} />
+        <Input
+          type="tel"
+          id="phoneNumber"
+          name="phoneNumber"
+          value={values.phoneNumber}
+          placeholder="Ejemplo: 809 686 5700 / 809-686-5700"
+          onChange={handleChange}
+        />
         {errors.phoneNumber && <FormErrorMessage>{errors.phoneNumber}</FormErrorMessage>}
       </FormControl>
 

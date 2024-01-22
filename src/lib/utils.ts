@@ -16,6 +16,6 @@ export const areAllKeysDefined = (obj: Record<string, any>): boolean => {
       return false;
     }
   }
-  
+
   return true;
 };

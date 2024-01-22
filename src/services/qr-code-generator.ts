@@ -150,16 +150,18 @@ export default class QRCodeGenerator {
     numberOfCodes: number,
     brand: string,
     code: string,
-    size: string,
     type: string,
+    size: string,
   ): any[] {
     const codes = [];
     for (let i = 0; i < numberOfCodes; i++) {
+      // Generate a random alphanumeric string
       const randomPart = this.generateRandomAlphanumeric(codeLength);
-      
+
       // QR code format: brand_code_type_size_randomid
       const qrCodeString = `${brand}_${code}_${type}_${size}_${randomPart}`;
 
+      // Add the QR code to the array
       codes.push({ qrCode: qrCodeString });
     }
 

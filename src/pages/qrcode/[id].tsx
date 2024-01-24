@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react';
 
 import FormFields from '@/components/FormFields';
 import Layout from '@/components/Layout';
-import useForm from '@/hooks/useForm';
-import validateForm from '@/validations/formValidations';
+import useOrderForm from '@/hooks/useOrderForm';
+import validateForm from '@/validations/order-form';
 
 type ApiResponse = {
   status: number;
@@ -22,7 +22,7 @@ const QRCodePage: React.FC = () => {
   const [isQrCodeValid, setIsQrCodeValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmittedSuccessfully, setIsSubmittedSuccessfully] = useState(false);
-  const { values, errors, handleChange, handleSubmit } = useForm(submitForm, validateForm);
+  const { values, errors, handleChange, handleSubmit } = useOrderForm(submitForm, validateForm);
 
   useEffect(() => {
     if (id) {
@@ -114,7 +114,7 @@ const QRCodePage: React.FC = () => {
               </Text>
             </Flex>
           </Box>
-          <Box mt={4} maxWidth="800px" margin="0 auto" as="section" css={formStyle}>
+          <Box mt={4} maxWidth="800px" margin="0 auto" as="section">
             {isSubmittedSuccessfully && (
               <Alert status="info" borderRadius="sm" mb={4}>
                 <AlertIcon />
@@ -131,6 +131,7 @@ const QRCodePage: React.FC = () => {
                 borderRadius={{ base: 'none', md: '0px 0px 10px 10px' }}
                 boxShadow={{ base: 'none', md: 'rgba(0, 0, 0, 0.08) 0px 0px 3px 1px' }}
                 padding={{ base: 0, md: '3rem' }}
+                css={formStyle}
               >
                 <FormFields values={values} errors={errors} handleChange={handleChange} qrCode={qrCode} />
                 <Button

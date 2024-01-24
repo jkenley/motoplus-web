@@ -24,7 +24,7 @@ const Header: React.FC = () => {
           <Text fontWeight="600" fontSize=".9rem" color="#343947">
             <Link
               as={NextLink}
-              href="/auth/sign-in"
+              href="/login"
               _hover={{
                 textDecoration: 'none',
               }}

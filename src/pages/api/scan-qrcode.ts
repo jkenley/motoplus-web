@@ -1,13 +1,7 @@
 import { BASE_API_URL } from '@/lib/constants';
+import { Data } from '@/types/index';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-// Define the structure of the response data
-type Data = {
-  status: number;
-  message: string;
-  data?: any;
-};
 
 // The main handler for the API endpoint
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {

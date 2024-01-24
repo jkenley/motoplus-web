@@ -1,7 +1,7 @@
-import { FormErrors, FormValues } from '../types';
+import { OrderErrors, OrderValues } from '../types';
 
-const validateForm = (values: FormValues): FormErrors => {
-  const errors: FormErrors = {};
+const validateOrderForm = (values: OrderValues): OrderErrors => {
+  const errors: OrderErrors = {};
 
   // Store name validation
   if (!values.store) {
@@ -23,4 +23,4 @@ const validateForm = (values: FormValues): FormErrors => {
   return errors;
 };
 
-export default validateForm;
+export default validateOrderForm;

@@ -1,10 +1,13 @@
 import { FormEvent, useCallback, useState } from 'react';
 
-import { FormErrors, FormValues } from '../types';
+import { OrderErrors, OrderValues } from '../types';
 
-const useForm = (submitCallback: (values: FormValues) => void, validate: (values: FormValues) => FormErrors) => {
-  const [values, setValues] = useState<FormValues>({ store: '', qrCode: '', fullName: '', phoneNumber: '', note: '' });
-  const [errors, setErrors] = useState<FormErrors>({});
+const useOrderForm = (
+  submitCallback: (values: OrderValues) => void,
+  validate: (values: OrderValues) => OrderErrors,
+) => {
+  const [values, setValues] = useState<OrderValues>({ store: '', qrCode: '', fullName: '', phoneNumber: '', note: '' });
+  const [errors, setErrors] = useState<OrderErrors>({});
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -40,4 +43,4 @@ const useForm = (submitCallback: (values: FormValues) => void, validate: (values
   };
 };
 
-export default useForm;
+export default useOrderForm;

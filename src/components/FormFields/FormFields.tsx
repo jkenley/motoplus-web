@@ -33,7 +33,7 @@ const FormFields: React.FC<FormFieldsProps> = ({ values, errors, handleChange, q
 
       <FormControl>
         <FormLabel htmlFor="qrCode">Código QR</FormLabel>
-        <Input type="text" id="qrCode" name="qrCode" value={qrCode} disabled />
+        <Input type="text" id="qrCode" name="qrCode" value={qrCode} disabled required />
       </FormControl>
 
       <FormControl isInvalid={!!errors.fullName}>

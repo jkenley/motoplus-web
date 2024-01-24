@@ -89,14 +89,7 @@ export interface StoreState {
   fetchOrders: () => Promise<void>;
 }
 
-export interface FormFieldsProps {
-  values: FormValues;
-  errors: FormErrors;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
-  qrCode: string;
-}
-
-export interface FormValues {
+export interface OrderValues {
   store: string;
   qrCode: string;
   fullName: string;
@@ -104,9 +97,32 @@ export interface FormValues {
   note: string;
 }
 
-export interface FormErrors {
+export interface OrderErrors {
   store?: string;
   fullName?: string;
   phoneNumber?: string;
   note?: string;
 }
+
+export interface FormFieldsProps {
+  values: OrderValues;
+  errors: OrderErrors;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+  qrCode: string;
+}
+
+export interface LoginValues {
+  email: string;
+  password: string;
+}
+
+export interface LoginErrors {
+  email?: string;
+  password?: string;
+}
+
+export type Data = {
+  status: number;
+  message: string;
+  data?: any;
+};

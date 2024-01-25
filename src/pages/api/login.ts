@@ -4,8 +4,19 @@ import { NextApiRequest, NextApiResponse } from 'next';
 // import { BASE_API_URL } from '@/lib/constants';
 import { Data } from '@/types/index';
 
-// Regular expression for email validation
+// Regular expression to validate email addresses
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+/**
+ * API handler function for the login endpoint.
+ *
+ * This function processes POST requests for user authentication. It expects
+ * an email and a password in the request body, validates them, and performs
+ * the necessary authentication logic (not included here).
+ *
+ * @param req - The incoming HTTP request (NextApiRequest).
+ * @param res - The outgoing HTTP response (NextApiResponse<Data>).
+ */
 
 // The main handler for the API endpoint
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {

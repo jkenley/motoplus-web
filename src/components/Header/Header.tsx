@@ -5,6 +5,20 @@ import { useRouter } from 'next/router';
 const Header: React.FC = () => {
   const router = useRouter();
 
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/logout', {
+        method: 'POST',
+      });
+      if (response.ok) {
+        // Redirect to the login page after logout
+        router.push('/login');
+      }
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
     <Flex mb={8} pb={4} justify="space-between" align="center" borderBottom="1px solid hsla(0, 0%, 93%, 100%)">
       <Link
@@ -24,7 +38,8 @@ const Header: React.FC = () => {
           <Text fontWeight="600" fontSize=".9rem" color="#343947">
             <Link
               as={NextLink}
-              href="/login"
+              href="#"
+              onClick={handleLogout}
               _hover={{
                 textDecoration: 'none',
               }}

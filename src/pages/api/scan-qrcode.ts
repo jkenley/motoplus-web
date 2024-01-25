@@ -3,7 +3,17 @@ import { Data } from '@/types/index';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-// The main handler for the API endpoint
+/**
+ * API handler function for the 'scan-qrcode' endpoint.
+ *
+ * This function processes POST requests for scanning a QR code associated with a store.
+ * It expects certain fields in the request body, such as storeId, fullName, phoneNumber,
+ * qrCodeNumber, and optional notes. The function validates these inputs and constructs
+ * a payload for further processing or sending to an external API.
+ *
+ * @param req - The incoming HTTP request (NextApiRequest).
+ * @param res - The outgoing HTTP response (NextApiResponse<Data>).
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   // Only allow POST requests, return 405 for other methods
   if (req.method !== 'POST') {

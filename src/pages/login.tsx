@@ -49,17 +49,17 @@ const LoginPage: React.FC = () => {
 
       const responseData: any = await response.json();
 
-      // Check if the response status is 200 and update isSubmittedSuccessfully
+      // Check if the response status is 200
       if (responseData.status === 200) {
-        // Wait for 5 seconds
-        await new Promise((resolve) => setTimeout(resolve, 5000));
+        // Wait for 2 seconds
+        await new Promise((resolve) => setTimeout(resolve, 2000));
 
         // Redirect to the homepage
         router.push('/');
       }
     } catch (error) {
-      // Wait for 3 seconds
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      // Wait for 2 seconds
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       alert('Error al iniciar sesión');
     } finally {
       setIsSubmitting(false); // Reset submitting state

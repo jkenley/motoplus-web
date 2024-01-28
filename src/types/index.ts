@@ -126,3 +126,23 @@ export type Data = {
   message: string;
   data?: any;
 };
+
+export type PhoneLimitResponse = {
+  data: {
+    id: number;
+    attributes: {
+      phoneNumberLimit: number;
+    };
+  };
+};
+
+type Order = {
+  id: number;
+  attributes: {
+    qrCodeNumber: string;
+  };
+};
+
+export type PhoneNumberSubmittedResponse = {
+  data: Order[];
+};

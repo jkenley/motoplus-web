@@ -1,4 +1,5 @@
 import { BASE_API_URL } from '@/lib/constants';
+import checkPhoneLimitsAndOrders from '@/lib/phone-check';
 import { Data } from '@/types/index';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -42,6 +43,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       notes,
     },
   };
+
+  // Check if the number of submitted phone numbers has reached or exceeded the limit
+  const isLimitReached = await checkPhoneLimitsAndOrders(phoneNumber);
+
+  // If the limit is reached or exceeded, return a 403 error
+  if (isLimitReached) {
+    res.status(429).json({ status: 429, message: 'Phone number limit reached', data: null });
+    return;
+  }
 
   try {
     // Send a POST request to the external API

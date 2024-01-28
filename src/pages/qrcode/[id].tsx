@@ -39,6 +39,7 @@ const QRCodePage: React.FC = () => {
   async function submitForm() {
     setIsSubmitting(true); // Start of submission
 
+    // Send data to the /api/scan-qrcode endpoint
     try {
       // Create an object with the data from the form
       const buyerInfo = {
@@ -49,7 +50,6 @@ const QRCodePage: React.FC = () => {
         notes: values.note,
       };
 
-      // Send data to the /api/scan-qrcode endpoint
       const response = await fetch('/api/scan-qrcode', {
         method: 'POST',
         headers: {
@@ -57,6 +57,17 @@ const QRCodePage: React.FC = () => {
         },
         body: JSON.stringify(buyerInfo),
       });
+
+      // Check for a 429 Too Many Requests response
+      if (response.status === 429) {
+        // Handle the rate limit error here
+        alert(
+          'Ese número de teléfono ha excedido su cuota de envíos y no podemos procesar más envíos para este número.',
+        );
+        console.error('Error: Too many requests. Please try again later.');
+        setIsSubmittedSuccessfully(false);
+        return; // Stop further execution in this block
+      }
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -69,9 +80,10 @@ const QRCodePage: React.FC = () => {
         setIsSubmittedSuccessfully(true);
       }
 
-      // Handle response data as needed
+      // Handle other response data as needed
     } catch (error) {
       setIsSubmittedSuccessfully(false); // Reset in case of error
+      console.error(error);
     } finally {
       setIsSubmitting(false); // Reset submitting state
     }
@@ -116,7 +128,7 @@ const QRCodePage: React.FC = () => {
           </Box>
           <Box mt={4} maxWidth="800px" margin="0 auto" as="section">
             {isSubmittedSuccessfully && (
-              <Alert status="info" borderRadius="sm" mb={4}>
+              <Alert status="success" borderRadius="sm" bg="#D5F8E0" mb={4}>
                 <AlertIcon />
                 <AlertDescription fontFamily="body" fontSize=".9rem">
                   El formulario ha sido enviado con éxito.

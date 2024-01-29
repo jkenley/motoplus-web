@@ -28,6 +28,10 @@ const useStore = create<StoreState>((set) => ({
       const response = await fetch(`${BASE_API_URL}/api/qr-codes?populate[orderItem][populate]=*`);
       const jsonResponse = await response.json();
 
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
       const data: OrderData[] = jsonResponse.data;
 
       // Create dropdown values

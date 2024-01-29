@@ -123,9 +123,9 @@ const ListQRCode: React.FC = () => {
           <div
             key={item.qrCode}
             style={{
-              border: '1px solid #eaeaea',
               borderRadius: '2px',
-              padding: '32px',
+              border: '1px solid #eaeaea',
+              padding: '32px 28px',
             }}
           >
             <QRCodeBox value={item.qrCode} />
